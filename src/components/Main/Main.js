@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-import './Main.css';
 
 import { Typography } from '@material-ui/core';
 import { DataGrid } from '@material-ui/data-grid';
