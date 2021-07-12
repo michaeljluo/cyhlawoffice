@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ClientDialog from '../ClientDialog/ClientDialog'
+
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
@@ -14,6 +15,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
+import { Container } from "react-bootstrap";
+
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -29,8 +32,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function CaseDialog( props ) {
   const classes = useStyles();
 
-  console.log(props);
   const [open, setOpen] = React.useState(props.open);
+  const [openClient, setOpenClient] = React.useState(false);
+
+  //callback for child to use
+  const onCloseClient = React.useCallback(openClient => {
+    setOpenClient(openClient);
+  });
 
   //unused
   const handleClickOpen = () => {
@@ -44,30 +52,56 @@ export default function CaseDialog( props ) {
 
   return(
     <div className="CaseDialog">
-        <Dialog fullScreen open={props.open} onClose={handleClose} TransitionComponent={Transition}>
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-                <CloseIcon />
-              </IconButton>
-              <Typography variant="h6" className={classes.title}>
-                Sound
-              </Typography>
-              <Button autoFocus color="inherit" onClick={handleClose}>
-                save
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <List>
-            <ListItem button>
-              <ListItemText primary="Phone ringtone" secondary="Titania" />
-            </ListItem>
-            <Divider />
-            <ListItem button>
-              <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-            </ListItem>
-          </List>
-        </Dialog>
+      <Container>
+        <div className="CaseInformation">
+          <Dialog fullScreen open={props.open} onClose={handleClose} TransitionComponent={Transition}>
+            <AppBar position="static" className={classes.appBar}>
+              <Toolbar>
+                <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                  <CloseIcon />
+                </IconButton>
+                <Typography variant="h6" className={classes.title}>
+                  Case Information
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <List>
+              <ListItem button onClick={() => setOpenClient(true)}>
+                <ListItemText primary="Client Information" secondary="Take-in Sheet" />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Case Status"/>
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Letters"/>
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Other Documents"/>
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Title Reports"/>
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Title Report Order"/>
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Closing"/>
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="After Closing"/>
+              </ListItem>
+            </List>
+          </Dialog>
+        </div>
+        <ClientDialog openClient={openClient} onCloseClient={onCloseClient}></ClientDialog>
+      </Container>
     </div>
   );
 }

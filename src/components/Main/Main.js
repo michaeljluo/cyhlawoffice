@@ -51,6 +51,7 @@ export default function Main() {
   const [selectionModel, setSelectionModel] = React.useState([]);
   const [open, setOpen] = React.useState(false);
 
+  //callback for child to use
   const onClose = React.useCallback(open => {
     setOpen(open);
   });
@@ -73,6 +74,8 @@ export default function Main() {
                         setOpen(true);
                     }}
                     selectionModel={selectionModel}
+                    disableColumnMenu={true}
+                    
                 />
             </div>
         </div>
