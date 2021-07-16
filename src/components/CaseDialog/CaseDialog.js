@@ -66,7 +66,7 @@ export default function CaseDialog( props ) {
               </Toolbar>
             </AppBar>
             <List>
-              <ListItem button onClick={() => setOpenClient(true)}>
+              <ListItem button onClick={() => {setOpenClient(true); handleClose();}}>
                 <ListItemText primary="Client Information" secondary="Take-in Sheet" />
               </ListItem>
               <Divider />

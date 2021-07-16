@@ -75,6 +75,7 @@ export default function Main() {
                     }}
                     selectionModel={selectionModel}
                     disableColumnMenu={true}
+                    hideFooterSelectedRowCount
                     
                 />
             </div>

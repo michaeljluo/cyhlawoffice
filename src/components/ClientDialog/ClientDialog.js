@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -54,6 +54,8 @@ export default function ClientDialog( props ) {
   const [openClient, setOpenClient] = React.useState(props.openClient);
 
 
+
+
   //unused
   const handleClickOpen = () => {
     setOpenClient(true);
@@ -67,11 +69,17 @@ export default function ClientDialog( props ) {
   return(
     <div className="ClientDialog">
         <Dialog 
+        maxWidth="sm"
+        fullWidth
         open={props.openClient} 
         onClose={handleClose} 
         TransitionComponent={Transition}
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
+        disableBackdropClick 
+        disableEscapeKeyDown 
+        BackdropProps={{ style: { backgroundColor: "transparent" } }}
+
         >
           <AppBar position="static" className={classes.appBar}>
             <Toolbar>
