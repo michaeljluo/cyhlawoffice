@@ -32,32 +32,32 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function CaseDialog( props ) {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(props.open);
-  const [openClient, setOpenClient] = React.useState(false);
+  const [caseOpen, setCaseOpen] = React.useState(props.caseOpen);
+  const [clientOpen, setClientOpen] = React.useState(false);
 
   //callback for child to use
-  const onCloseClient = React.useCallback(openClient => {
-    setOpenClient(openClient);
+  const callbackClientClose = React.useCallback(open => {
+    setClientOpen(open);
   });
 
   //unused
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleCaseOpen = () => {
+    setCaseOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    props.onClose(open);
+  const handleCaseClose = () => {
+    setCaseOpen(false);
+    props.callbackCaseClose(false);
   };
 
   return(
     <div className="CaseDialog">
       <Container>
         <div className="CaseInformation">
-          <Dialog fullScreen open={props.open} onClose={handleClose} TransitionComponent={Transition}>
+          <Dialog fullScreen open={props.caseOpen} onClose={handleCaseClose} TransitionComponent={Transition}>
             <AppBar position="static" className={classes.appBar}>
               <Toolbar>
-                <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                <IconButton edge="start" color="inherit" onClick={handleCaseClose} aria-label="close">
                   <CloseIcon />
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
@@ -66,7 +66,7 @@ export default function CaseDialog( props ) {
               </Toolbar>
             </AppBar>
             <List>
-              <ListItem button onClick={() => {setOpenClient(true); handleClose();}}>
+              <ListItem button onClick={() => {setClientOpen(true); handleCaseClose();}}>
                 <ListItemText primary="Client Information" secondary="Take-in Sheet" />
               </ListItem>
               <Divider />
@@ -100,12 +100,12 @@ export default function CaseDialog( props ) {
             </List>
           </Dialog>
         </div>
-        <ClientDialog openClient={openClient} onCloseClient={onCloseClient}></ClientDialog>
+        <ClientDialog clientOpen={clientOpen} callbackClientClose={callbackClientClose}></ClientDialog>
       </Container>
     </div>
   );
 }
 
-CaseDialog.propTypes = { open: PropTypes.bool.isRequired };
+CaseDialog.propTypes = { caseOpen: PropTypes.bool.isRequired };
 
 CaseDialog.defaultProps = {};

@@ -46,7 +46,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 function PaperComponent(props) {
   return (
     <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
@@ -58,15 +60,31 @@ function PaperComponent(props) {
 export default function ClientDialog( props ) {
   const classes = useStyles();
   
-  const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
+  
   
 
-  const [openClient, setOpenClient] = React.useState(props.openClient);
+
+  /**
+   * client open state
+   */
+
+  const [clientOpen, setClientOpen] = React.useState(props.clientOpen);
+  
+  //unused
+  const handleClientOpen = () => {
+    setClientOpen(true);
+  };
+
+  const handleClientClose = () => {
+    setClientOpen(false);
+    props.callbackClientClose(false);
+  };
   
 
   
+  /**
+   * select options
+   */
 
   const [findOfficeOption, setFindOfficeOption] = React.useState('');
 
@@ -127,24 +145,17 @@ export default function ClientDialog( props ) {
   
 
 
-  //unused
-  const handleClickOpen = () => {
-    setOpenClient(true);
-  };
 
-  const handleClose = () => {
-    setOpenClient(false);
-    props.onCloseClient(openClient);
-  };
 
   return(
     <div className="ClientDialog">
         <Dialog 
+        
+        open={props.clientOpen} 
+        onClose={handleClientClose} 
+        TransitionComponent={Transition}
         maxWidth="sm"
         fullWidth
-        open={props.openClient} 
-        onClose={handleClose} 
-        TransitionComponent={Transition}
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
         disableBackdropClick 
@@ -156,7 +167,7 @@ export default function ClientDialog( props ) {
           <AppBar position="static" className={classes.appBar}>
             <Toolbar>
               <DialogActions>
-                <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                <IconButton edge="start" color="inherit" onClick={handleClientClose} aria-label="close">
                   <CloseIcon/>
                 </IconButton>
                 <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
@@ -166,7 +177,7 @@ export default function ClientDialog( props ) {
                   </Typography>
                 </DialogTitle>
                
-                <Button autoFocus color="inherit" onClick={handleClose} style={{marginLeft: "200px"}}>
+                <Button autoFocus color="inherit" onClick={handleClientClose} style={{marginLeft: "200px"}}>
                   save
                 </Button>
               </DialogActions>
@@ -289,6 +300,6 @@ export default function ClientDialog( props ) {
   );
 }
 
-ClientDialog.propTypes = { open: PropTypes.bool.isRequired };
+ClientDialog.propTypes = { clientOpen: PropTypes.bool.isRequired };
 
 ClientDialog.defaultProps = {};

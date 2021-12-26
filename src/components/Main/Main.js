@@ -49,11 +49,11 @@ export default function Main() {
   const classes = useStyles();
 
   const [selectionModel, setSelectionModel] = React.useState([]);
-  const [open, setOpen] = React.useState(false);
+  const [caseOpen, setCaseOpen] = React.useState(false);
 
   //callback for child to use
-  const onClose = React.useCallback(open => {
-    setOpen(open);
+  const callbackCaseClose = React.useCallback(open => {
+    setCaseOpen(open);
   });
 
 
@@ -71,7 +71,7 @@ export default function Main() {
                     pageSize={5}
                     onSelectionModelChange={(newSelection) => {
                         setSelectionModel(newSelection.selectionModel);
-                        setOpen(true);
+                        setCaseOpen(true);
                     }}
                     selectionModel={selectionModel}
                     disableColumnMenu={true}
@@ -83,7 +83,7 @@ export default function Main() {
         
         {//use selectionModel here
         }
-        <CaseDialog open={open} onClose={onClose}></CaseDialog>
+        <CaseDialog caseOpen={caseOpen} callbackCaseClose={callbackCaseClose}></CaseDialog>
 
       </Container>
     </div>
