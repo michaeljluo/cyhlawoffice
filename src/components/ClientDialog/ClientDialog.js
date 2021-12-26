@@ -141,10 +141,93 @@ export default function ClientDialog( props ) {
     },
   ];
   
-  
-  
 
+  const [clientPositionOption, setClientPositionOption] = React.useState('');
 
+  const handleClientPositionOptionChange = (event) => {
+    setClientPositionOption(event.target.value);
+  };
+
+  const clientPositionOptions = [
+    {
+      value: 'seller',
+      label: 'Seller',
+    },
+    {
+      value: 'purchaser',
+      label: 'Purchaser',
+    },
+    {
+      value: 'borrower',
+      label: 'Refinance Borrower',
+    },
+    {
+      value: 'transferer',
+      label: 'Intrafamily Transfer Transferer',
+    },
+    {
+      value: 'other',
+      label: 'Other',
+    },
+  ];
+  
+  const [propertyTypeOption, setPropertyTypeOption] = React.useState('');
+
+  const handlePropertyTypeOption = (event) => {
+    setPropertyTypeOption(event.target.value);
+  };
+
+  const propertyTypeOptions = [
+    {
+      value: 'one',
+      label: 'One family house',
+    },
+    {
+      value: 'two',
+      label: 'Two family house',
+    },
+    {
+      value: 'three',
+      label: 'Three family house',
+    },
+    {
+      value: 'four',
+      label: 'Four family house',
+    },
+    {
+      value: 'more',
+      label: 'More than four family house',
+    },
+    {
+      value: 'commercial',
+      label: 'Commercial Property',
+    },
+  ];
+
+  const [attorneyFeeOption, setAttorneyFeeOption] = React.useState('');
+
+  const handleAttorneyFeeOption = (event) => {
+    setAttorneyFeeOption(event.target.value);
+  };
+
+  const attorneyFeeOptions = [
+    {
+      value: 'hourly',
+      label: 'Hourly fees',
+    },
+    {
+      value: 'fixed',
+      label: 'Fixed fees',
+    },
+    {
+      value: 'contingent',
+      label: 'Contingent fees',
+    },
+    {
+      value: 'other',
+      label: 'Other',
+    },
+  ];
 
 
   return(
@@ -202,12 +285,14 @@ export default function ClientDialog( props ) {
                   variant="outlined"
                 />
                 <TextField
+                  required
                   id="outlined"
                   label="Client's name"
                   defaultValue=""
                   variant="outlined"
                 />
                 <TextField
+                  required
                   id="outlined"
                   label="Client's address"
                   defaultValue=""
@@ -226,12 +311,14 @@ export default function ClientDialog( props ) {
                   variant="outlined"
                 />
                 <TextField
+                  required
                   id="outlined"
                   label="Cell Phone Number"
                   defaultValue=""
                   variant="outlined"
                 />
                 <TextField
+                  required
                   id="outlined"
                   label="Email"
                   defaultValue=""
@@ -247,8 +334,10 @@ export default function ClientDialog( props ) {
               
 
               <TextField
+                required
+                id="select"
                 select
-                label="How did you find us?"
+                label="How did you find our office?"
                 value={contactMethodOption}
                 onChange={handleContactMethodOptionChange}
               >
@@ -261,13 +350,107 @@ export default function ClientDialog( props ) {
 
 
               <TextField
-                id="standard-select-currency"
+                id="select"
                 select
-                label="Preferred method of contact?"
+                label="What's your preferred method of contact?"
                 value={findOfficeOption}
                 onChange={handleFindOfficeOptionChange}
               >
                 {findOfficeOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+
+              <TextField
+                required
+                id="select"
+                select
+                label="B. Client position in transaction:"
+                value={clientPositionOption}
+                onChange={handleClientPositionOptionChange}
+              >
+                {clientPositionOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <TextField
+                required
+                id="select"
+                select
+                label="C. Type of Property:"
+                value={propertyTypeOption}
+                onChange={handlePropertyTypeOption}
+              >
+                {propertyTypeOptions.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+
+
+              <br></br>
+              <Typography>
+                D. Subject Property
+              </Typography>
+              <TextField
+                  id="outlined" 
+                  label="Street Address"
+                  defaultValue=""
+                  variant="outlined"
+                />
+                <TextField
+                  id="outlined" 
+                  label="Street Address Line 2"
+                  defaultValue=""
+                  variant="outlined"
+                />
+                <TextField
+                  id="outlined" 
+                  label="County"
+                  defaultValue=""
+                  variant="outlined"
+                />
+                <TextField
+                  id="outlined" 
+                  label="City"
+                  defaultValue=""
+                  variant="outlined"
+                />
+                <TextField
+                  id="outlined" 
+                  label="State"
+                  defaultValue=""
+                  variant="outlined"
+                />
+                <TextField
+                  id="outlined" 
+                  label="Zip Code"
+                  defaultValue=""
+                  variant="outlined"
+                />
+
+                <br></br>
+
+
+
+
+
+              <TextField
+                id="select"
+                select
+                label="Attorney's Fees"
+                value={attorneyFeeOption}
+                onChange={handleAttorneyFeeOption}
+              >
+                {attorneyFeeOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
                   </MenuItem>
